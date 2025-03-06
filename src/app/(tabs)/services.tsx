@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import apios from "@/services/api";
 import { colors } from "@/styles/colors";
 import { Picker } from "@react-native-picker/picker";
@@ -156,12 +157,10 @@ export default function Services() {
                         </>
                     }
                     <View className="mt-6">
-                        <TouchableOpacity
-                            onPress={handleSubmit}
-                            className="bg-red-400 h-16 flex items-center justify-center rounded-md"
-                        >
-                            <Text className="text-xl font-body text-white uppercase">Gerar Orçamento</Text>
-                        </TouchableOpacity>
+                        <Button
+                            onPress={() => router.push('/(tabs)')}
+                            title='Gerar orçamento'
+                        />
                     </View>
                 </View>
             </View>

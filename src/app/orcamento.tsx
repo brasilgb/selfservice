@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import Section from '@/components/section';
 import { colors } from '@/styles/colors';
 import { maskMoney } from '@/Util/mask';
@@ -41,7 +42,7 @@ export default function Orcamento() {
                     />
                     <Section
                         title="Descrição"
-                        description={`${params.descricao}`}
+                        description={`${params.descricao === 'undefined' ? 'N/A' : params.descricao }`}
                     />
                     <View className='flex flex-row items-center justify-between mt-20 px-4'>
                         <Text className='text-xl uppercase text-gray-200 bg-blue-900 py-1 px-2 rounded'>Valor do Orçamento</Text>
@@ -49,12 +50,10 @@ export default function Orcamento() {
                         <Text className='text-4xl text-gray-200 bg-blue-900 p-4 rounded-full'>{maskMoney(`${params.valor}`)}</Text>
                     </View>
                     <View className="flex-1 items-center justify-center w-full px-10">
-                        <TouchableOpacity
-                            onPress={() => router.push('/(tabs)')}
-                            className="bg-red-400 py-4 w-full items-center rounded-md"
-                        >
-                            <Text className="text-xl font-bold text-white uppercase">Sair</Text>
-                        </TouchableOpacity>
+                        <Button
+                        onPress={() => router.push('/(tabs)')}
+                        title='Sair'
+                        />
                     </View>
                 </View>
             </View>
