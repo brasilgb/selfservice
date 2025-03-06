@@ -1,9 +1,8 @@
 {
   "expo": {
-    "name": "selfservice",
+    "name": "Eplus Auto",
     "slug": "selfservice",
     "version": "1.0.0",
-
     "scheme": "selfservice",
     "web": {
       "bundler": "metro",
@@ -13,19 +12,16 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
-    "userInterfaceStyle": "light",
-
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2E3247"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
