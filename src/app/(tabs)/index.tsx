@@ -8,18 +8,19 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 
 export default function Index() {
-    const [empresa, setEmpresa] = useState<any>([]);
+    // const [empresa, setEmpresa] = useState<any>([]);
     const router = useRouter();
-    useEffect(() => {
-        const getEmpresa = async () => {
-            await apios.get("empresa")
-                .then((res) => {
-                    const data = res.data.data;
-                    setEmpresa(data);
-                })
-        };
-        getEmpresa();
-    }, []);
+    
+    // useEffect(() => {
+    //     const getEmpresa = async () => {
+    //         await apios.get("empresa")
+    //             .then((res) => {
+    //                 const data = res.data.data;
+    //                 setEmpresa(data);
+    //             })
+    //     };
+    //     getEmpresa();
+    // }, []);
 
     return (
         <Animated.View
@@ -47,21 +48,11 @@ export default function Index() {
                 </View>
                 <View className="flex-1 items-center justify-center">
                     <View className="flex-row flex-wrap items-center justify-center gap-10">
-                        <ManutencaoLink title="Manutenção em" subtitle="Notebooks" image={require('@/assets/images/notebook.jpg')} />
-                        <ManutencaoLink title="Manutenção em" subtitle="Smartphones" image={require('@/assets/images/smartphone.jpg')} />
-                        <ManutencaoLink title="manutenção em" subtitle="Computadores" image={require('@/assets/images/computador.jpg')} />
-                        <TouchableOpacity
-                            onPress={() => router.push('/services')}
-                            className="bg-gray-50 w-[40%] h-52 flex-col justify-around items-center  border-4 border-white rounded-md shadow shadow-zinc-600"
-                        >
-                            <FontAwesome5
-                            name="tools"
-                            size={90}
-                            color={'#C8005590'}
-                        />
-                            <Text className="text-xl font-bold text-blue-900/80 uppercase">Outros serviços</Text>
-                        </TouchableOpacity>
-                    </View>
+                        <ManutencaoLink title="Manutenção em" subtitle="Notebooks" image={require('@/assets/images/notebook.jpg')} data={{ pathname: "/services", params: { type: 'notebook', name: 'Notebooks' } }} />
+                        <ManutencaoLink title="Manutenção em" subtitle="Smartphones" image={require('@/assets/images/smartphone.jpg')} data={{ pathname: "/services", params: { type: 'mobile', name: 'Móbiles' } }} />
+                        <ManutencaoLink title="manutenção em" subtitle="Computadores" image={require('@/assets/images/computador.jpg')} data={{ pathname: "/services", params: { type:'computador', name: 'Computadores' } }} />
+                        <ManutencaoLink title="Manutenção em" subtitle="Outros serviços" image={require('@/assets/images/todos.png')} data={{ pathname: "/services", params: { type:'outros', name: 'Outros' } }} />
+                        </View>
                 </View>
             </View>
         </Animated.View>

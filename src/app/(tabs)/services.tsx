@@ -2,14 +2,17 @@ import { Button } from "@/components/Button";
 import apios from "@/services/api";
 import { colors } from "@/styles/colors";
 import { Picker } from "@react-native-picker/picker";
-import { useRouter } from "expo-router";
+import { useIsFocused } from "@react-navigation/native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, Image, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 
 export default function Services() {
     const router = useRouter();
+    const params = useLocalSearchParams();
+    const isFocused = useIsFocused();
 
     const [servicos, setServicos] = useState<any>([]);
     const [marcas, setMarcas] = useState<any>([]);
@@ -18,19 +21,22 @@ export default function Services() {
     const [selectedService, setSelectedService] = useState<any>(null);
     const [selectedMarca, setSelectedMarca] = useState<any>(null);
     const [selectedModelo, setSelectedModelo] = useState<any>(null);
-    const [serviceSimple, setServiceSimple] = useState<boolean>(false);
-
+    const [serviceSimple, setServiceSimple] = useState<boolean>(true);
 
     useEffect(() => {
         const getServicos = async () => {
-            await apios.get("servicos")
+            await apios.post("servicos", {
+                equipamento: params.type
+            })
                 .then((res) => {
                     const data = res.data.data;
                     setServicos(data);
                 })
         };
-        getServicos();
-    }, []);
+        if (isFocused) {
+            getServicos();
+        }
+    }, [params, isFocused]);
 
     useEffect(() => {
         const getMarcas = async () => {
@@ -40,8 +46,10 @@ export default function Services() {
                     setMarcas(data);
                 })
         };
-        getMarcas();
-    }, []);
+        if (isFocused) {
+            getMarcas();
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         const getModelos = async () => {
@@ -53,15 +61,18 @@ export default function Services() {
                     setModelos(data);
                 })
         };
-        getModelos();
-    }, [selectedMarca]);
+        if (isFocused) {
+            getModelos();
+        }
+    }, [selectedMarca, isFocused]);
 
     useEffect(() => {
         if (selectedService) {
             const simple = servicos.some((sf: any) => { return sf.id == selectedService && sf.simples == 1 });
             setServiceSimple(simple);
         }
-    }, [servicos, selectedService])
+
+    }, [servicos, selectedService, isFocused])
 
     const handleSubmit = async () => {
 
@@ -90,6 +101,9 @@ export default function Services() {
             .then((res) => {
                 const data = res.data.data;
                 router.push({ pathname: "/orcamento", params: data });
+                setSelectedMarca([]);
+                setSelectedModelo([]);
+                setSelectedService([]);
             }).catch((err) => {
                 Alert.alert('Erro', 'Não há orçamento para este produto!');
             })
@@ -107,17 +121,26 @@ export default function Services() {
         >
             <View className="flex-1 flex-col items-center justify-center bg-white px-6 w-full">
                 <StatusBar style='light' backgroundColor={colors.blue[900]} />
-                <Text className="text-3xl font-medium text-gray-700 mb-2">Selecione o orçamento desejado</Text>
                 <View className="w-full bg-blue-900 p-8 rounded-lg shadow">
+                    <View className="py-10 flex-row intens-center justify-center w-full">
+                        <Image
+                            className="h-[80] w-[220]"
+                            source={require('@/assets/images/logoeplus.png')}
+                        />
+                    </View>
+                    <Text className="text-4xl font-bold text-gray-50 pb-6 text-center uppercase">Orçamento</Text>
+                    <Text className="text-2xl font-light text-gray-50 pb-6 text-center">Para gerar o orçamento selecione as opções relacionadas à <Text className="text-yellow-900">{params.name}</Text></Text>
                     <View className="rounded-md bg-white p-0.5 border">
                         <Picker
+                            mode="dropdown"
+                            dropdownIconColor={'red'}
                             selectedValue={selectedService}
                             onValueChange={(itemValue, itemIndex) =>
                                 setSelectedService(itemValue)
                             }
                             style={{ backgroundColor: colors.white }}
                         >
-                            <Picker.Item label="Selecione o serviço" value={null} />
+                            <Picker.Item label="Selecione o serviço" value={null} style={{ color: colors.red[400] }} />
                             {servicos?.map((servico: any) => (
                                 <Picker.Item key={servico.id} label={servico.servico} value={servico.id} />
                             ))}
@@ -128,13 +151,19 @@ export default function Services() {
                         <>
                             <View className="mt-4 rounded-md bg-white p-0.5 border">
                                 <Picker
+                                    mode="dropdown"
+                                    dropdownIconColor={'red'}
                                     selectedValue={selectedMarca}
                                     onValueChange={(itemValue, itemIndex) =>
                                         setSelectedMarca(itemValue)
                                     }
                                     style={{ backgroundColor: colors.white }}
+                                    itemStyle={{
+                                        fontSize: 30,
+                                        fontFamily: 'Quicksand-Light',
+                                    }}
                                 >
-                                    <Picker.Item label="Selecione o marca" value={null} />
+                                    <Picker.Item label="Selecione o marca" value={null} style={{ color: colors.red[400] }} />
                                     {marcas?.map((marca: any) => (
                                         <Picker.Item key={marca.id} label={marca.marca} value={marca.id} />
                                     ))}
@@ -142,13 +171,15 @@ export default function Services() {
                             </View>
                             <View className="mt-4 rounded-md bg-white p-0.5 border">
                                 <Picker
+                                    mode="dropdown"
+                                    dropdownIconColor={'red'}
                                     selectedValue={selectedModelo}
                                     onValueChange={(itemValue, itemIndex) =>
                                         setSelectedModelo(itemValue)
                                     }
                                     style={{ backgroundColor: colors.white }}
                                 >
-                                    <Picker.Item label="Selecione o modelo" value="0" />
+                                    <Picker.Item label="Selecione o modelo" value={null} style={{ color: colors.red[400] }} />
                                     {modelos?.map((modelo: any) => (
                                         <Picker.Item key={modelo.id} label={modelo.modelo} value={modelo.id} />
                                     ))}
@@ -156,9 +187,9 @@ export default function Services() {
                             </View>
                         </>
                     }
-                    <View className="mt-6">
+                    <View className="mt-6 py-10">
                         <Button
-                            onPress={() => router.push('/(tabs)')}
+                            onPress={() => handleSubmit()}
                             title='Gerar orçamento'
                         />
                     </View>

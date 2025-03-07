@@ -26,7 +26,7 @@ export default function Orcamento() {
                 <StatusBar style='light' backgroundColor={colors.blue[900]} />
                 <View className='bg-white flex-1 w-full mt-6 px-0.5'>
                     <View className='bg-blue-900 mt-6 rounded-t-2xl py-4'>
-                        <Text className='text-2xl text-gray-200 text-center'>Orçamento Gerado</Text>
+                        <Text className='text-2xl text-yellow-900 text-center uppercase'>Orçamento Gerado</Text>
                     </View>
                     <Section
                         title="Serviço Solicitado"
@@ -47,7 +47,7 @@ export default function Orcamento() {
                     <View className='flex flex-row items-center justify-between mt-20 px-4'>
                         <Text className='text-xl uppercase text-gray-200 bg-blue-900 py-1 px-2 rounded'>Valor do Orçamento</Text>
                         <View className='bg-blue-900 h-1 flex-1' />
-                        <Text className='text-4xl text-gray-200 bg-blue-900 p-4 rounded-full'>{maskMoney(`${params.valor}`)}</Text>
+                        <Text className='text-4xl text-gray-200 bg-blue-500 p-4 rounded-full'>{maskMoney(`${params.valor}`)}</Text>
                     </View>
                     <View className="flex-1 items-center justify-center w-full px-10">
                         <Button

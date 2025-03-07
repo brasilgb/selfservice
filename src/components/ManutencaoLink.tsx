@@ -6,12 +6,14 @@ type ManutencaoProps = {
     title: string;
     subtitle: string;
     image: any;
+    data: any;
 }
-export default function ManutencaoLink({title, subtitle, image}: ManutencaoProps) {
+
+export default function ManutencaoLink({title, subtitle, image, data}: ManutencaoProps) {
     const router = useRouter();
     return (
         <TouchableOpacity 
-        onPress={() => router.push('/services')}
+        onPress={() => router.push(data)}
         className="bg-gray-50 border-4 border-white rounded-md shadow shadow-zinc-600 w-[40%] h-52"
         >
             <Image
