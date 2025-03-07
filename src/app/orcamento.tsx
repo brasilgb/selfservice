@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import Section from '@/components/section';
 import { colors } from '@/styles/colors';
 import { maskMoney } from '@/Util/mask';
+import { FontAwesome6 } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react'
@@ -42,17 +43,21 @@ export default function Orcamento() {
                     />
                     <Section
                         title="Descrição"
-                        description={`${params.descricao === 'undefined' ? 'N/A' : params.descricao }`}
+                        description={`${params.descricao === 'undefined' ? 'N/A' : params.descricao}`}
                     />
                     <View className='flex flex-row items-center justify-between mt-20 px-4'>
                         <Text className='text-xl uppercase text-gray-200 bg-blue-900 py-1 px-2 rounded'>Valor do Orçamento</Text>
                         <View className='bg-blue-900 h-1 flex-1' />
                         <Text className='text-4xl text-gray-200 bg-blue-500 p-4 rounded-full'>{maskMoney(`${params.valor}`)}</Text>
                     </View>
-                    <View className="flex-1 items-center justify-center w-full px-10">
+                    <View className="flex-1 flex-row items-center justify-between w-full px-10">
                         <Button
-                        onPress={() => router.push('/(tabs)')}
-                        title='Sair'
+                            onPress={() => router.push('/services')}
+                            title={<FontAwesome6 name="arrow-left" size={22} />}
+                        />
+                        <Button
+                            onPress={() => router.push('/(tabs)')}
+                            title='Sair'
                         />
                     </View>
                 </View>

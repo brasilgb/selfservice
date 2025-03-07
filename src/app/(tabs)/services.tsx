@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import apios from "@/services/api";
 import { colors } from "@/styles/colors";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useIsFocused } from "@react-navigation/native";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -187,7 +188,11 @@ export default function Services() {
                             </View>
                         </>
                     }
-                    <View className="mt-6 py-10">
+                    <View className="mt-6 py-10 flex-row justify-between">
+                        <Button
+                            onPress={() => router.push('/(tabs)')}
+                            title={<FontAwesome6 name="arrow-left" size={22} />}
+                        />
                         <Button
                             onPress={() => handleSubmit()}
                             title='Gerar orçamento'
