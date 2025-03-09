@@ -51,13 +51,10 @@ export default function Orcamento() {
                         <Text className='text-4xl text-gray-200 bg-blue-500 p-4 rounded-full'>{maskMoney(`${params.valor}`)}</Text>
                     </View>
                     <View className="flex-1 flex-row items-center justify-between w-full px-10">
-                        <Button
-                            onPress={() => router.push('/services')}
-                            title={<FontAwesome6 name="arrow-left" size={22} />}
-                        />
+                        <View></View>
                         <Button
                             onPress={() => router.push('/(tabs)')}
-                            title='Sair'
+                            title='Concluído'
                         />
                     </View>
                 </View>

@@ -3,7 +3,6 @@ import apios from "@/services/api";
 import { colors } from "@/styles/colors";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { useIsFocused } from "@react-navigation/native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
@@ -13,7 +12,6 @@ import Animated, { FadeIn } from "react-native-reanimated";
 export default function Services() {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const isFocused = useIsFocused();
 
     const [servicos, setServicos] = useState<any>([]);
     const [marcas, setMarcas] = useState<any>([]);
@@ -23,21 +21,23 @@ export default function Services() {
     const [selectedMarca, setSelectedMarca] = useState<any>(null);
     const [selectedModelo, setSelectedModelo] = useState<any>(null);
     const [serviceSimple, setServiceSimple] = useState<boolean>(true);
-
+    
     useEffect(() => {
         const getServicos = async () => {
+            let tipo = params.type
+            console.log(tipo);
+            
             await apios.post("servicos", {
-                equipamento: params.type
+                equipamento: tipo
             })
-                .then((res) => {
-                    const data = res.data.data;
-                    setServicos(data);
+            .then((res) => {
+                const data = res.data.data;
+                setServicos(data);
+                console.log(`'${data}'`);
                 })
         };
-        if (isFocused) {
-            getServicos();
-        }
-    }, [params, isFocused]);
+        getServicos();
+    }, [params.type]);
 
     useEffect(() => {
         const getMarcas = async () => {
@@ -47,10 +47,8 @@ export default function Services() {
                     setMarcas(data);
                 })
         };
-        if (isFocused) {
-            getMarcas();
-        }
-    }, [isFocused]);
+        getMarcas();
+    }, []);
 
     useEffect(() => {
         const getModelos = async () => {
@@ -62,18 +60,15 @@ export default function Services() {
                     setModelos(data);
                 })
         };
-        if (isFocused) {
-            getModelos();
-        }
-    }, [selectedMarca, isFocused]);
+        getModelos();
+    }, [selectedMarca]);
 
     useEffect(() => {
         if (selectedService) {
             const simple = servicos.some((sf: any) => { return sf.id == selectedService && sf.simples == 1 });
             setServiceSimple(simple);
         }
-
-    }, [servicos, selectedService, isFocused])
+    }, [servicos, selectedService])
 
     const handleSubmit = async () => {
 
@@ -102,9 +97,6 @@ export default function Services() {
             .then((res) => {
                 const data = res.data.data;
                 router.push({ pathname: "/orcamento", params: data });
-                setSelectedMarca([]);
-                setSelectedModelo([]);
-                setSelectedService([]);
             }).catch((err) => {
                 Alert.alert('Erro', 'Não há orçamento para este produto!');
             })

@@ -48,10 +48,10 @@ export default function Index() {
                 </View>
                 <View className="flex-1 items-center justify-center">
                     <View className="flex-row flex-wrap items-center justify-center gap-10">
-                        <ManutencaoLink title="Manutenção em" subtitle="Notebooks" image={require('@/assets/images/notebook.jpg')} data={{ pathname: "/services", params: { type: 'notebook', name: 'Notebooks' } }} />
-                        <ManutencaoLink title="Manutenção em" subtitle="Smartphones" image={require('@/assets/images/smartphone.jpg')} data={{ pathname: "/services", params: { type: 'mobile', name: 'Móbiles' } }} />
-                        <ManutencaoLink title="manutenção em" subtitle="Computadores" image={require('@/assets/images/computador.jpg')} data={{ pathname: "/services", params: { type: 'computador', name: 'Computadores' } }} />
-                        <ManutencaoLink title="Manutenção em" subtitle="Outros serviços" image={require('@/assets/images/todos.png')} data={{ pathname: "/services", params: { type: 'outros', name: 'Outros' } }} />
+                        <ManutencaoLink title="Manutenção em" subtitle="Notebooks" image={require('@/assets/images/notebook.jpg')} data={{ pathname: "/services", params: { type: 'Notebook', name: 'Notebooks' } }} />
+                        <ManutencaoLink title="Manutenção em" subtitle="Smartphones" image={require('@/assets/images/smartphone.jpg')} data={{ pathname: "/services", params: { type: 'Mobile', name: 'Mobiles' } }} />
+                        <ManutencaoLink title="manutenção em" subtitle="Computadores" image={require('@/assets/images/computador.jpg')} data={{ pathname: "/services", params: { type: 'Computador', name: 'Computadores' } }} />
+                        <ManutencaoLink title="Manutenção em" subtitle="Outros serviços" image={require('@/assets/images/todos.png')} data={{ pathname: "/services", params: { type: 'Outros', name: 'Outros' } }} />
                     </View>
                 </View>
             </View>
